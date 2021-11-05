@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SpaceFlight</string>
+    <string name="text_title_article">SpaceX ready to break another rocket reuse record with launch early Sunday</string>
+    <string name="text_int">Em:</string>
+    <string name="text_summary_article">With the successful docking of Mission Extension Vehicle 2, or MEV–2, to the Intelsat 10–02 satellite last month, Northrop Grumman not only repeated the task of successfully attaching one of their MEV spacecraft to a functioning satellite but also successfully proved the ability to grab a still-transmitting telecommunications satellite without disrupting service.</string>
+    <string name="text_by">Por:</string>
+    <string name="text_updatedAt">Atualizado em:</string>
+    <string name="text_unknow_error">Um erro ocorreu</string>
+</resources>
