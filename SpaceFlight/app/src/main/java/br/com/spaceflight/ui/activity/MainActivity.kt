@@ -1,7 +1,8 @@
-package br.com.spaceflight
+package br.com.spaceflight.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import br.com.spaceflight.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
