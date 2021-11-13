@@ -1,7 +1,10 @@
 package br.com.spaceflight.data.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Articles(
-    val id: String? = "",
+    val id: Int? = null,
     val title: String?,
     val url: String?,
     val imageUrl: String?,
