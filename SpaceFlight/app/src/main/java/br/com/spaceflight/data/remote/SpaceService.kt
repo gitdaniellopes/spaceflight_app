@@ -12,6 +12,6 @@ interface SpaceService {
     @GET("articles/{id}")
     suspend fun getArticleById(
         @Path("id")
-        id: String
+        id: Int
     ): Articles
 }

@@ -1,8 +1,11 @@
 package br.com.spaceflight.data.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class Articles(
     val id: Int? = null,
     val title: String?,
@@ -15,4 +18,4 @@ data class Articles(
     val featured: Boolean?,
     val launches: List<Launches>? = null,
     val events: List<Events>? = null,
-)
+) : Parcelable

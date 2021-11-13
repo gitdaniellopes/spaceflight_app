@@ -21,7 +21,12 @@ class SpaceRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getArticle(id: Int): Articles {
-        TODO("Not yet implemented")
+    override suspend fun getArticle(id: Int): Flow<Articles> = flow {
+        try {
+            val article = service.getArticleById(id)
+            emit(article)
+        } catch (ex: HttpException) {
+            throw RemoteException("Não foi possivel acessar a API")
+        }
     }
 }

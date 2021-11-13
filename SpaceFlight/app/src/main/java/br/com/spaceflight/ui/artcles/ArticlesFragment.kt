@@ -8,13 +8,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.spaceflight.R
 import br.com.spaceflight.databinding.FragmentListBinding
 import br.com.spaceflight.ui.adapter.ArticleAdapter
 import br.com.spaceflight.util.State
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ArticlesFragment : Fragment(R.layout.fragment_list) {
@@ -22,9 +23,8 @@ class ArticlesFragment : Fragment(R.layout.fragment_list) {
     private val adapterArticles by lazy { ArticleAdapter() }
     private val viewModel: ArticlesViewModel by viewModels()
 
-    private val binding: FragmentListBinding by lazy {
-        FragmentListBinding.inflate(layoutInflater)
-    }
+    private var _binding: FragmentListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,11 +40,19 @@ class ArticlesFragment : Fragment(R.layout.fragment_list) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
         }
+
+        adapterArticles.setOnClickListener { article ->
+            article.id?.let {
+                val action =
+                    ArticlesFragmentDirections.actionArticlesFragmentToDetailsArticleFragment(it)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun initObserver() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            viewModel.articles.collectLatest { state ->
+            viewModel.articles.collect { state ->
                 when (state) {
                     is State.Success -> {
                         binding.progressBar.visibility = View.INVISIBLE
@@ -71,6 +79,12 @@ class ArticlesFragment : Fragment(R.layout.fragment_list) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

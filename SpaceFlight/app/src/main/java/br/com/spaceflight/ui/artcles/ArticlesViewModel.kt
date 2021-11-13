@@ -15,7 +15,6 @@ class ArticlesViewModel @Inject constructor(
     private val listArticlesUseCase: ListArticlesUseCase
 ) : ViewModel() {
 
-
     private val _articles = MutableStateFlow<State<List<Articles>>>(State.Loading)
     val articles = _articles.asStateFlow()
 

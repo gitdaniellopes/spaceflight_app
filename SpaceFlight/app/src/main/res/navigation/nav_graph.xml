@@ -9,5 +9,17 @@
         tools:layout="@layout/fragment_list"
         android:id="@+id/articlesFragment"
         android:name="br.com.spaceflight.ui.artcles.ArticlesFragment"
-        android:label="ArticlesFragment" />
+        android:label="ArticlesFragment" >
+        <action
+            android:id="@+id/action_articlesFragment_to_detailsArticleFragment"
+            app:destination="@id/detailsArticleFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsArticleFragment"
+        android:name="br.com.spaceflight.ui.detail.DetailsArticleFragment"
+        android:label="DetailsArticleFragment" >
+        <argument
+            android:name="article"
+            app:argType="integer" />
+    </fragment>
 </navigation>

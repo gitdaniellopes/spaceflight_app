@@ -24,11 +24,6 @@ object RemoteModule {
 
     @Singleton
     @Provides
-    fun provideListArticleUseCase(repository: SpaceRepository) =
-        ListArticlesUseCase(repository as SpaceRepositoryImpl)
-
-    @Singleton
-    @Provides
     fun provideSpaceRepositoryImp(
         service: SpaceService
     ) = SpaceRepositoryImpl(service) as SpaceRepository
