@@ -29,5 +29,6 @@ class DetailsArticleViewModel @Inject constructor(
             .collect { article ->
                 _article.value = State.Success(article)
             }
+
     }
 }

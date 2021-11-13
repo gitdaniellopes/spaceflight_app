@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.spaceflight.R
 import br.com.spaceflight.databinding.FragmentListBinding
 import br.com.spaceflight.ui.adapter.ArticleAdapter
 import br.com.spaceflight.util.State
@@ -18,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class ArticlesFragment : Fragment(R.layout.fragment_list) {
+class ArticlesFragment : Fragment() {
 
     private val adapterArticles by lazy { ArticleAdapter() }
     private val viewModel: ArticlesViewModel by viewModels()
@@ -28,7 +27,6 @@ class ArticlesFragment : Fragment(R.layout.fragment_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getArticles()
         setupRecycleView()
         initObserver()
     }
@@ -51,7 +49,7 @@ class ArticlesFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun initObserver() {
-        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launchWhenResumed {
             viewModel.articles.collect { state ->
                 when (state) {
                     is State.Success -> {

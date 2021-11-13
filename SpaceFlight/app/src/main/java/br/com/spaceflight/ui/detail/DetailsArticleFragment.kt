@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class DetailsArticleFragment : Fragment(R.layout.fragment_details) {
+class DetailsArticleFragment : Fragment() {
 
     private val args: DetailsArticleFragmentArgs by navArgs()
     private val viewModel: DetailsArticleViewModel by viewModels()
@@ -29,7 +29,6 @@ class DetailsArticleFragment : Fragment(R.layout.fragment_details) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val articleId = args.article
-
         viewModel.getArticleById(articleId)
         initObserver()
     }

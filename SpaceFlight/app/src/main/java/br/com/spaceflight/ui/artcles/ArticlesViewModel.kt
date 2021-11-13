@@ -18,7 +18,11 @@ class ArticlesViewModel @Inject constructor(
     private val _articles = MutableStateFlow<State<List<Articles>>>(State.Loading)
     val articles = _articles.asStateFlow()
 
-     fun getArticles() = viewModelScope.launch {
+    init {
+        getArticles()
+    }
+
+    private fun getArticles() = viewModelScope.launch {
         listArticlesUseCase()
             .onStart {
                 _articles.value = State.Loading
