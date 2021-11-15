@@ -6,7 +6,7 @@ import br.com.spaceflight.data.remote.SpaceService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -21,7 +21,8 @@ class SpaceRepositoryImpl @Inject constructor(
         } catch (ex: HttpException) {
             throw RemoteException("Não foi possivel acessar a API")
         }
-    }
+    }.flowOn(Dispatchers.IO)
+
 
     override suspend fun getArticle(id: Int): Flow<Articles> = flow {
         try {
@@ -31,4 +32,5 @@ class SpaceRepositoryImpl @Inject constructor(
             throw RemoteException("Não foi possivel acessar a API")
         }
     }
+
 }
