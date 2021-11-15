@@ -31,6 +31,6 @@ class SpaceRepositoryImpl @Inject constructor(
         } catch (ex: HttpException) {
             throw RemoteException("Não foi possivel acessar a API")
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
 }

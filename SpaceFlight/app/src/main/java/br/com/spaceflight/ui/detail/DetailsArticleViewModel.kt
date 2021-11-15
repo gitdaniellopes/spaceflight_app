@@ -6,7 +6,10 @@ import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.domain.DetailsArticleUseCase
 import br.com.spaceflight.util.State
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,9 +23,6 @@ class DetailsArticleViewModel @Inject constructor(
 
     fun getArticleById(id: Int) = viewModelScope.launch {
         detailsArticleUseCase(id)
-            .onStart {
-                _article.value = State.Loading
-            }
             .catch {
                 _article.value = State.Error(it)
             }
