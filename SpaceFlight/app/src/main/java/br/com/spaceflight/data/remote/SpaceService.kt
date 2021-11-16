@@ -9,6 +9,9 @@ interface SpaceService {
     @GET("articles")
     suspend fun getArticles(): List<Articles>
 
+    @GET("articles")
+    suspend fun getArticles2(): List<Articles>
+
     @GET("articles/{id}")
     suspend fun getArticleById(
         @Path("id")

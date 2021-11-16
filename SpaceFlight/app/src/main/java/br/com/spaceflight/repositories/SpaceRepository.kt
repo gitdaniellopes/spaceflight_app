@@ -1,5 +1,6 @@
 package br.com.spaceflight.repositories
 
+import br.com.spaceflight.data.model.ArticleResponse
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.util.State
 import kotlinx.coroutines.flow.Flow
@@ -9,4 +10,5 @@ interface SpaceRepository {
 
     suspend fun getArticles(): Flow<List<Articles>>
     suspend fun getArticle(id: Int): Flow<Articles>
+    suspend fun getArticles2(): Flow<State<List<Articles>>>
 }

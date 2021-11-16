@@ -1,5 +1,6 @@
 package br.com.spaceflight.di
 
+import android.app.Application
 import br.com.spaceflight.data.remote.SpaceService
 import br.com.spaceflight.domain.ListArticlesUseCase
 import br.com.spaceflight.repositories.SpaceRepository
@@ -22,11 +23,20 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
 
+    @Provides
+    @Singleton
+    fun provideListArticlesUseCase(repository: SpaceRepository): ListArticlesUseCase {
+        return ListArticlesUseCase(repository)
+    }
+
     @Singleton
     @Provides
     fun provideSpaceRepositoryImp(
-        service: SpaceService
-    ) = SpaceRepositoryImpl(service) as SpaceRepository
+        service: SpaceService,
+        context: Application
+    ): SpaceRepository {
+        return SpaceRepositoryImpl(service, context)
+    }
 
     @Singleton
     @Provides

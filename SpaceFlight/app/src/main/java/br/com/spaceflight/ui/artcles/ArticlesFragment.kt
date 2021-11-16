@@ -27,9 +27,9 @@ class ArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getArticles()
+        viewModel.getAll()
         setupRecycleView()
-        initObserver()
+        initObserver2()
     }
 
 
@@ -46,6 +46,35 @@ class ArticlesFragment : Fragment() {
                     ArticlesFragmentDirections.actionArticlesFragmentToDetailsArticleFragment(it)
                 findNavController().navigate(action)
             }
+        }
+    }
+
+    private fun initObserver2() {
+            viewModel.articles2.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    is State.Success -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        adapterArticles.articles = state.result.toList()
+                    }
+                    is State.Error -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), state.error.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                    is State.Error2 -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        Toast.makeText(requireContext(), state.error, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    is State.Empty -> {
+                        binding.progressBar.visibility = View.INVISIBLE
+                        Toast.makeText(context, "Caiu aqui", Toast.LENGTH_SHORT).show()
+                    }
+                    is State.Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+                }
         }
     }
 

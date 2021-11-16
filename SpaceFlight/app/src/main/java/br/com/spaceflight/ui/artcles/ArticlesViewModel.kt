@@ -1,5 +1,6 @@
 package br.com.spaceflight.ui.artcles
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.spaceflight.data.model.Articles
@@ -18,21 +19,35 @@ class ArticlesViewModel @Inject constructor(
     private val listArticlesUseCase: ListArticlesUseCase
 ) : ViewModel() {
 
+    private val _articles2 = MutableLiveData<State<List<Articles>>>()
+    val articles2 get() = _articles2
+
     private val _articles = MutableStateFlow<State<List<Articles>>>(State.Loading)
     val articles = _articles.asStateFlow()
 
 
-     fun getArticles() = viewModelScope.launch {
+//    fun getArticles() = viewModelScope.launch {
+//        listArticlesUseCase()
+//            .catch {
+//                _articles.value = State.Error(it)
+//            }
+//            .collect { articles ->
+//                if (articlesisNullOrEmpty()) {
+//                    _articles.value = State.Empty
+//                } else {
+//                    _articles.value = State.Success(articles)
+//                }
+//            }
+//    }
+
+    fun getAll() = viewModelScope.launch {
         listArticlesUseCase()
             .catch {
-                _articles.value = State.Error(it)
+                _articles2.postValue(State.Error(it))
             }
-            .collect { articles ->
-                if (articles.isNullOrEmpty()) {
-                    _articles.value = State.Empty
-                } else {
-                    _articles.value = State.Success(articles)
-                }
+            .collect {
+                _articles2.postValue(it)
             }
+
     }
 }
