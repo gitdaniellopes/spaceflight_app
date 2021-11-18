@@ -1,10 +1,13 @@
-package br.com.spaceflight.ui.adapter
+package br.com.spaceflight.presentation.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import br.com.spaceflight.core.util.extensions.formatDate
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.databinding.ItemArticleBinding
 import com.bumptech.glide.Glide
@@ -39,12 +42,13 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = articles[position]
         holder.binding.apply {
             Glide.with(holder.itemView.context).load(article.imageUrl).into(imageArticle)
             tvTitleArticle.text = article.title
-            tvPublishedAt.text = article.publishedAt
+            tvPublishedAt.text = formatDate(article.publishedAt)
         }
 
         holder.itemView.setOnClickListener {

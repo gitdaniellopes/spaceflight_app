@@ -1,4 +1,4 @@
-package br.com.spaceflight.ui.activity
+package br.com.spaceflight.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

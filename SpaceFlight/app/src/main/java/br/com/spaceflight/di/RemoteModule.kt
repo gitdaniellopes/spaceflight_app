@@ -2,10 +2,9 @@ package br.com.spaceflight.di
 
 import android.app.Application
 import br.com.spaceflight.data.remote.SpaceService
-import br.com.spaceflight.domain.ListArticlesUseCase
-import br.com.spaceflight.repositories.SpaceRepository
-import br.com.spaceflight.repositories.SpaceRepositoryImpl
-import br.com.spaceflight.util.Constants.BASE_URL
+import br.com.spaceflight.data.repository.SpaceRepositoryImpl
+import br.com.spaceflight.domain.repository.SpaceRepository
+import br.com.spaceflight.domain.use_case.list.ListArticlesUseCase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -53,7 +52,7 @@ object RemoteModule {
     @ExperimentalSerializationApi
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(SpaceService.BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .client(client)
             .build()

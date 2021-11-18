@@ -1,8 +1,8 @@
-package br.com.spaceflight.domain
+package br.com.spaceflight.domain.use_case.details
 
-import br.com.spaceflight.core.UseCase
+import br.com.spaceflight.core.util.use_case.UseCase
 import br.com.spaceflight.data.model.Articles
-import br.com.spaceflight.repositories.SpaceRepository
+import br.com.spaceflight.domain.repository.SpaceRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

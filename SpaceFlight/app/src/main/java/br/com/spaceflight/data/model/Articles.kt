@@ -13,9 +13,13 @@ data class Articles(
     val imageUrl: String?,
     val newsSite: String?,
     val summary: String?,
-    val publishedAt: String?,
+    val publishedAt: String,
     val updatedAt: String?,
     val featured: Boolean?,
-    val launches: List<Launches>? = null,
-    val events: List<Events>? = null,
-) : Parcelable
+    val launches: List<Launches> = emptyList(),
+    val events: List<Events> = emptyList(),
+) : Parcelable {
+
+    fun hasLaunches(): Boolean = launches.isNotEmpty()
+    fun getLaunchesCount(): Int = launches.size
+}

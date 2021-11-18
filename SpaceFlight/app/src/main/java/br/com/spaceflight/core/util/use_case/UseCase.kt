@@ -1,4 +1,4 @@
-package br.com.spaceflight.core
+package br.com.spaceflight.core.util.use_case
 
 import kotlinx.coroutines.flow.Flow
 

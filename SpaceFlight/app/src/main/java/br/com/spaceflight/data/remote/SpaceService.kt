@@ -6,11 +6,12 @@ import retrofit2.http.Path
 
 interface SpaceService {
 
-    @GET("articles")
-    suspend fun getArticles(): List<Articles>
+    companion object {
+        const val BASE_URL = "https://api.spaceflightnewsapi.net/v3/"
+    }
 
     @GET("articles")
-    suspend fun getArticles2(): List<Articles>
+    suspend fun getArticles(): List<Articles>
 
     @GET("articles/{id}")
     suspend fun getArticleById(

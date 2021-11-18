@@ -1,10 +1,10 @@
-package br.com.spaceflight.ui.detail
+package br.com.spaceflight.presentation.ui.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.spaceflight.data.model.Articles
-import br.com.spaceflight.domain.DetailsArticleUseCase
-import br.com.spaceflight.util.State
+import br.com.spaceflight.domain.use_case.details.DetailsArticleUseCase
+import br.com.spaceflight.core.util.state.NetworkState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,16 +18,16 @@ class DetailsArticleViewModel @Inject constructor(
     private val detailsArticleUseCase: DetailsArticleUseCase
 ) : ViewModel() {
 
-    private val _article = MutableStateFlow<State<Articles>>(State.Loading)
+    private val _article = MutableStateFlow<NetworkState<Articles>>(NetworkState.Loading)
     val article = _article.asStateFlow()
 
     fun getArticleById(id: Int) = viewModelScope.launch {
         detailsArticleUseCase(id)
             .catch {
-                _article.value = State.Error(it)
+                _article.value = NetworkState.Error(it)
             }
             .collect { article ->
-                _article.value = State.Success(article)
+                _article.value = NetworkState.Success(article)
             }
 
     }

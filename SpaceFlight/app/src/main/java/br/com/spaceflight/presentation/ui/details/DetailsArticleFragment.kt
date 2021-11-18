@@ -1,4 +1,4 @@
-package br.com.spaceflight.ui.detail
+package br.com.spaceflight.presentation.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import br.com.spaceflight.R
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.databinding.FragmentDetailsBinding
-import br.com.spaceflight.util.State
+import br.com.spaceflight.core.util.state.NetworkState
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -37,19 +36,19 @@ class DetailsArticleFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
             viewModel.article.collect { state ->
                 when (state) {
-                    is State.Success -> {
+                    is NetworkState.Success -> {
                         progressBarDetails.visibility = View.INVISIBLE
                         onLoadedArticle(state.result)
                     }
-                    is State.Error -> {
+                    is NetworkState.Error -> {
                         progressBarDetails.visibility = View.INVISIBLE
                         Toast.makeText(context, state.error.message.toString(), Toast.LENGTH_SHORT)
                             .show()
                     }
-                    is State.Loading -> {
+                    is NetworkState.Loading -> {
                         progressBarDetails.visibility = View.VISIBLE
                     }
-                    is State.Empty -> {
+                    is NetworkState.Empty -> {
                         progressBarDetails.visibility = View.INVISIBLE
                     }
                 }

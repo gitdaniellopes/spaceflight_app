@@ -8,7 +8,7 @@
     <fragment
         tools:layout="@layout/fragment_list"
         android:id="@+id/articlesFragment"
-        android:name="br.com.spaceflight.ui.artcles.ArticlesFragment"
+        android:name="br.com.spaceflight.presentation.ui.list.ArticlesFragment"
         android:label="ArticlesFragment" >
         <action
             android:id="@+id/action_articlesFragment_to_detailsArticleFragment"
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsArticleFragment"
-        android:name="br.com.spaceflight.ui.detail.DetailsArticleFragment"
+        android:name="br.com.spaceflight.presentation.ui.details.DetailsArticleFragment"
         android:label="DetailsArticleFragment" >
         <argument
             android:name="article"
