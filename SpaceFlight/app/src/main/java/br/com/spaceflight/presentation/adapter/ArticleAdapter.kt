@@ -2,11 +2,13 @@ package br.com.spaceflight.presentation.adapter
 
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import br.com.spaceflight.R
 import br.com.spaceflight.core.util.extensions.formatDate
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.databinding.ItemArticleBinding
@@ -49,6 +51,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
             Glide.with(holder.itemView.context).load(article.imageUrl).into(imageArticle)
             tvTitleArticle.text = article.title
             tvPublishedAt.text = formatDate(article.publishedAt)
+            setHasLaunch(article, holder)
         }
 
         holder.itemView.setOnClickListener {
@@ -56,6 +59,23 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
                 it(article)
             }
         }
+    }
+
+    private fun ItemArticleBinding.setHasLaunch(
+        article: Articles,
+        holder: ArticleViewHolder
+    ) {
+        itemLaunchCh.visibility = if (article.hasLaunches()) {
+            View.VISIBLE
+        } else {
+            View.INVISIBLE
+        }
+        val count = article.getLaunchesCount()
+        itemLaunchCh.text = holder.itemView.resources.getQuantityString(
+            R.plurals.numberOfLaunchEvents,
+            count,
+            count
+        )
     }
 
     override fun getItemCount(): Int = articles.size

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="numberOfLaunchEvents">
+        <item quantity="one">%d evento de lançamento</item>
+        <item quantity="other">%d eventos de lançamento</item>
+    </plurals>
+</resources>

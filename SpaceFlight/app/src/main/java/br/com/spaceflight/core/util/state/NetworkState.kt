@@ -5,6 +5,5 @@ sealed class NetworkState<out T : Any> {
     object Empty : NetworkState<Nothing>()
 
     data class Success<out T : Any>(val result: T) : NetworkState<T>()
-    data class Error(val error: Throwable) : NetworkState<Nothing>()
-    data class ErrorString(val error: String) : NetworkState<Nothing>()
+    data class Error(val error: String) : NetworkState<Nothing>()
 }

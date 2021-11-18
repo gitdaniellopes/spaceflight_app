@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.spaceflight.core.util.state.NetworkState
 import br.com.spaceflight.databinding.FragmentListBinding
 import br.com.spaceflight.presentation.adapter.ArticleAdapter
-import br.com.spaceflight.core.util.state.NetworkState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,7 +25,6 @@ class ArticlesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getAll()
         setupRecycleView()
         initObserver2()
     }
@@ -53,12 +52,6 @@ class ArticlesFragment : Fragment() {
                     adapterArticles.articles = state.result.toList()
                 }
                 is NetworkState.Error -> {
-                    binding.progressBar.visibility = View.INVISIBLE
-                    Toast.makeText(requireContext(), state.error.toString(), Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                is NetworkState.ErrorString -> {
                     binding.progressBar.visibility = View.INVISIBLE
                     Toast.makeText(requireContext(), state.error, Toast.LENGTH_SHORT)
                         .show()

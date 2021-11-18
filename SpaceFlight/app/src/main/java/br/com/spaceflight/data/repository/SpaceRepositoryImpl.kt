@@ -2,11 +2,11 @@ package br.com.spaceflight.data.repository
 
 import android.app.Application
 import android.os.RemoteException
+import br.com.spaceflight.core.util.checkForInternetConnection
+import br.com.spaceflight.core.util.state.NetworkState
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.data.remote.SpaceService
-import br.com.spaceflight.core.util.state.NetworkState
 import br.com.spaceflight.domain.repository.SpaceRepository
-import br.com.spaceflight.core.util.checkForInternetConnection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -41,14 +41,14 @@ class SpaceRepositoryImpl @Inject constructor(
                     emit(NetworkState.Success(response))
                 }
             } else {
-                emit(NetworkState.ErrorString("Sem conexão com a internet"))
+                emit(NetworkState.Error("Sem conexão com a internet"))
             }
         } catch (ex: Exception) {
-            emit(NetworkState.ErrorString(ex.toString()))
+            emit(NetworkState.Error(ex.toString()))
         } catch (ex: HttpException) {
-            emit(NetworkState.ErrorString("Um erro ocorreu"))
+            emit(NetworkState.Error("Um erro ocorreu"))
         } catch (ex: IOException) {
-            emit(NetworkState.ErrorString("Erro no servidor, verifique a conexão com a internet"))
+            emit(NetworkState.Error("Erro no servidor, verifique a conexão com a internet"))
         }
     }.flowOn(Dispatchers.IO)
 }

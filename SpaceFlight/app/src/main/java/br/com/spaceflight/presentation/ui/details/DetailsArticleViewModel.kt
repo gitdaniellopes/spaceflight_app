@@ -24,7 +24,7 @@ class DetailsArticleViewModel @Inject constructor(
     fun getArticleById(id: Int) = viewModelScope.launch {
         detailsArticleUseCase(id)
             .catch {
-                _article.value = NetworkState.Error(it)
+                _article.value = NetworkState.Error(it.message.toString())
             }
             .collect { article ->
                 _article.value = NetworkState.Success(article)

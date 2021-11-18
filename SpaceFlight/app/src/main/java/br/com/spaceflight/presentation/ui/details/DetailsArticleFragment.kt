@@ -42,7 +42,7 @@ class DetailsArticleFragment : Fragment() {
                     }
                     is NetworkState.Error -> {
                         progressBarDetails.visibility = View.INVISIBLE
-                        Toast.makeText(context, state.error.message.toString(), Toast.LENGTH_SHORT)
+                        Toast.makeText(context, state.error, Toast.LENGTH_SHORT)
                             .show()
                     }
                     is NetworkState.Loading -> {
