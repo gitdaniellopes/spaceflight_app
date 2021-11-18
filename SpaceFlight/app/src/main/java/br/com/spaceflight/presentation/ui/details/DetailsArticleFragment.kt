@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import br.com.spaceflight.core.util.extensions.formatDate
+import br.com.spaceflight.core.util.state.NetworkState
 import br.com.spaceflight.data.model.Articles
 import br.com.spaceflight.databinding.FragmentDetailsBinding
-import br.com.spaceflight.core.util.state.NetworkState
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -22,8 +23,9 @@ class DetailsArticleFragment : Fragment() {
     private val args: DetailsArticleFragmentArgs by navArgs()
     private val viewModel: DetailsArticleViewModel by viewModels()
 
-    private var _binding: FragmentDetailsBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentDetailsBinding by lazy {
+        FragmentDetailsBinding.inflate(layoutInflater)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,9 +62,9 @@ class DetailsArticleFragment : Fragment() {
         Glide.with(requireContext()).load(article.imageUrl).into(imageArticleDetails)
         tvTitleArticleDetails.text = article.title
         tvNewsSite.text = article.newsSite
-        tvPublishedAtDetails.text = article.publishedAt
+        tvPublishedAtDetails.text = formatDate(article.publishedAt)
         tvSummary.text = article.summary
-        tvUpdateAtDetails.text = article.updatedAt
+        tvUpdateAtDetails.text = formatDate(article.updatedAt.toString())
     }
 
     override fun onCreateView(
@@ -70,12 +72,6 @@ class DetailsArticleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

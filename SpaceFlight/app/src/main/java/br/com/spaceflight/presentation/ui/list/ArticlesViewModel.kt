@@ -17,8 +17,8 @@ class ArticlesViewModel @Inject constructor(
     private val listArticlesUseCase: ListArticlesUseCase
 ) : ViewModel() {
 
-    private val _articles2 = MutableLiveData<NetworkState<List<Articles>>>()
-    val articles2 get() = _articles2
+    private val _articles= MutableLiveData<NetworkState<List<Articles>>>()
+    val articles get() = _articles
 
     init {
         getAll()
@@ -27,10 +27,10 @@ class ArticlesViewModel @Inject constructor(
     private fun getAll() = viewModelScope.launch {
         listArticlesUseCase()
             .catch {
-                _articles2.postValue(NetworkState.Error(it.message.toString()))
+                _articles.postValue(NetworkState.Error(it.message.toString()))
             }
             .collect {
-                _articles2.postValue(it)
+                _articles.postValue(it)
             }
     }
 }

@@ -20,13 +20,14 @@ class ArticlesFragment : Fragment() {
     private val adapterArticles by lazy { ArticleAdapter() }
     private val viewModel: ArticlesViewModel by viewModels()
 
-    private var _binding: FragmentListBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentListBinding by lazy {
+        FragmentListBinding.inflate(layoutInflater)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecycleView()
-        initObserver2()
+        initObserver()
     }
 
     private fun setupRecycleView() {
@@ -44,8 +45,8 @@ class ArticlesFragment : Fragment() {
         }
     }
 
-    private fun initObserver2() {
-        viewModel.articles2.observe(viewLifecycleOwner) { state ->
+    private fun initObserver() {
+        viewModel.articles.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is NetworkState.Success -> {
                     binding.progressBar.visibility = View.INVISIBLE
@@ -72,12 +73,6 @@ class ArticlesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
