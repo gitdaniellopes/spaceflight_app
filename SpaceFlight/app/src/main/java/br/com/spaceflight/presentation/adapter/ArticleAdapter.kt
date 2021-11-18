@@ -16,33 +16,8 @@ import com.bumptech.glide.Glide
 
 class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(val binding: ItemArticleBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    private val differCallback = object : DiffUtil.ItemCallback<Articles>() {
-        override fun areItemsTheSame(oldItem: Articles, newItem: Articles): Boolean {
-            return oldItem.hashCode() == newItem.hashCode()
-        }
-
-        override fun areContentsTheSame(oldItem: Articles, newItem: Articles): Boolean {
-            return oldItem == newItem
-        }
-    }
-
-    private val differ = AsyncListDiffer(this, differCallback)
-
-    var articles: List<Articles>
-        get() = differ.currentList
-        set(value) = differ.submitList(value)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder(
-            ItemArticleBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder =
+        ArticleViewHolder.from(parent)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
@@ -77,6 +52,33 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() 
             count
         )
     }
+
+    class ArticleViewHolder(val binding: ItemArticleBinding) : RecyclerView.ViewHolder(binding.root) {
+        companion object {
+            fun from(parent: ViewGroup): ArticleViewHolder {
+                val binding: ItemArticleBinding = ItemArticleBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+                return ArticleViewHolder(binding)
+            }
+        }
+    }
+
+    private val differCallback = object : DiffUtil.ItemCallback<Articles>() {
+        override fun areItemsTheSame(oldItem: Articles, newItem: Articles): Boolean {
+            return oldItem.hashCode() == newItem.hashCode()
+        }
+
+        override fun areContentsTheSame(oldItem: Articles, newItem: Articles): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    private val differ = AsyncListDiffer(this, differCallback)
+
+    var articles: List<Articles>
+        get() = differ.currentList
+        set(value) = differ.submitList(value)
 
     override fun getItemCount(): Int = articles.size
 
